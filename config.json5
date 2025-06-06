@@ -1,0 +1,70 @@
+{
+  // Parametri dei dati
+  dataset_name: "S1",
+  raw_data_zip_url: "https://zenodo.org/record/7732595/files/S1.zip",
+  base_data_dir: "./data",
+  num_activities: 5,
+  samples_per_file: 12000,
+  window_size: 450,
+  feature_dim: 2048,
+
+  // --- Flexible Antenna Configuration ---
+    
+  // Provide a list of indices (0–3). Examples:
+  // [0] -> Use only the first antenna
+  // [0, 2] -> Use the first and third antennas
+  // [0, 1, 2, 3] -> Use all antennas
+  // [] or null -> Use all default antennas
+
+  "antenna_indices": [1,2],
+
+  // Model parameters
+  latent_dim: 2,
+
+  
+  // Training parameters
+  batch_size: 25,
+  epochs: 20, 
+  learning_rate: 1e-3,
+  optimizer_type: "Adam",
+  device: "cpu", 
+
+  // Checkpoint e Logging
+  checkpoint_dir_base: "./data/S1/checkpoints",
+  log_dir_base: "./data/S1/logs",
+  save_every_n_epochs: 5,
+  load_pretrained_if_exists: false,
+
+  // Early Stopping
+  early_stopping_patience: 3,
+  early_stopping_monitor: "total_loss",
+  early_stopping_min_delta: 0.001,
+
+
+
+
+
+  // Encoder layer configurations, flexible activation type selection from torch.nn module (e.g., ReLU, Sigmoid, Tanh, LeakyReLU, ELU, etc.)
+  "encoder_conv_configs": [
+    {"out_channels": 32, "kernel_size": [5, 8], "stride": [5, 8], "padding": 0, "activation": "ReLU"},
+    {"out_channels": 32, "kernel_size": [5, 8], "stride": [5, 8], "padding": 0, "activation": "ReLU"}, 
+    {"out_channels": 32, "kernel_size": [2, 4], "stride": [2, 4], "padding": 0, "activation": "ReLU"},
+  ],
+  "encoder_fc_configs": [
+    {"out_features": 16, "activation": "Sigmoid"} 
+  ],
+  
+  // Decoder configurations
+  "decoder_fc_configs": [],
+  "decoder_conv_transpose_configs": [
+    {"out_channels": 32, "kernel_size": [2, 4], "stride": [2, 4], "padding": 0, "activation": "ReLU"},
+    {"out_channels": 32, "kernel_size": [5, 8], "stride": [5, 8], "padding": 0, "activation": "ReLU"},
+    {"out_channels": 32, "kernel_size": [5, 8], "stride": [5, 8], "padding": 0, "activation": "ReLU"},
+    // The final layer with Sigmoid activation is automatically added by the code.
+  ],
+
+}
+
+
+
+
