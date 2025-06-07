@@ -11,7 +11,7 @@ Dynamic antenna selection: It is now possible to select one, multiple specific, 
 Configurable activation functions: Users can easily choose the type of activation function (ReLU, LeakyReLU, ELU, etc.) to use in the model by leveraging the torch.nn modules.
 
 **Configuration via JSON5 :**
-Model and training parameters are now managed through a .json5 file, which allows comments and greater flexibility when defining parameters. This makes tuning and using the code much simpler and more readable.
+Model and training parameters are now managed through a config.json5 file, which allows comments and greater flexibility when defining parameters. This makes tuning and using the code much simpler and more readable.
 
 **Secure Saving with SafeTensor :**
 Trained models are saved using SafeTensor, a secure and efficient format for tensor serialization.
