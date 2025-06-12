@@ -15,3 +15,8 @@ Model and training parameters are now managed through a config.json5 file, which
 
 **Secure Saving with SafeTensor :**
 Trained models are saved using SafeTensor, a secure and efficient format for tensor serialization.
+
+
+## Useful links
+
+- [Raw CSI dataset](https://doi.org/10.5281/zenodo.7732595)
