@@ -2,12 +2,24 @@
   // Parametri dei dati
   dataset_name: "S1",
   raw_data_zip_url: "https://zenodo.org/record/7732595/files/S1.zip",
-  base_data_dir: "./data",
+  base_data_dir: "../dataset",
   num_activities: 5,
   samples_per_file: 12000,
-  window_size: 450,
+  
+  //window_size: 450,
   feature_dim: 2048,
 
+  //Specify a list of receiver IDs and activity (es. ["a", "c"])
+  receivers: ["a"], 
+  activities: ["A","B","C","D","E"],  //2370 batch
+
+
+  // Experiment Parameters
+  "experiment_parameters": {
+    "window_sizes": [450, 300, 150],
+    "antennas_to_test": [[0], [1], [2], [3]],
+    "random_seeds": [42, 123, 2024]
+  },
   // --- Flexible Antenna Configuration ---
     
   // Provide a list of indices (0–3). Examples:
@@ -16,29 +28,49 @@
   // [0, 1, 2, 3] -> Use all antennas
   // [] or null -> Use all default antennas
 
-  "antenna_indices": [1,2],
+  //"antenna_indices": [0],
 
-  // Model parameters
+
+
+
+
+  // --- Choosing the Laten Destribution : gaussian or gumbel ---
+
+  "latent_distribution": "gumbel",
+
+  // Model parameters for Gaussian VAE and Gumbel Softmax
   latent_dim: 2,
+
+
+  // Gumbel Temperature Annealing Parameters
+  "gumbel_annealing": {
+    "initial_temperature": 1.0,
+    "min_temperature": 0.5,
+    // -ln(min_tau/initial_tau)/epochs
+    "annealing_rate": 0.035  
+  },
+
+
+  
 
   
   // Training parameters
   batch_size: 25,
   epochs: 20, 
-  learning_rate: 1e-3,
+  learning_rate: 1e-4,
   optimizer_type: "Adam",
   device: "cpu", 
 
   // Checkpoint e Logging
-  checkpoint_dir_base: "./data/S1/checkpoints",
-  log_dir_base: "./data/S1/logs",
+  checkpoint_dir_base: "../result/checkpoints",
+  log_dir_base: "../result/logs",
   save_every_n_epochs: 5,
   load_pretrained_if_exists: false,
 
   // Early Stopping
   early_stopping_patience: 3,
   early_stopping_monitor: "total_loss",
-  early_stopping_min_delta: 0.001,
+  early_stopping_min_delta: 3000,
 
 
 
